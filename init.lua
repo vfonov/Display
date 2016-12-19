@@ -12,6 +12,10 @@ local ffi = require 'ffi'
 require 'image'  -- image module is broken for now
 local torch = require 'torch'
 
+-- enable encoding of NaNs,to display interruptiung lines
+-- as per http://dygraphs.com/data.html specs
+json.encode_invalid_numbers("null")
+
 
 M = {
   url = 'http://localhost:8000/events'

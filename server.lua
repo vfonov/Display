@@ -7,14 +7,20 @@
 local async = require('async')
 local paths = require('paths')
 
+
+local mime_types = {
+   ['.css' ] ='text/css',
+   ['.js']   ='text/javascript',
+   ['.png']  ='image/png',
+   ['.PNG']  ='image/png',
+   ['.jpg']  ='image/jpeg',
+   ['.jpeg'] ='image/jpeg',
+   ['.JPG']  ='image/jpeg',
+   ['.JPEG'] ='image/jpeg'
+  }
+
 local function getMime(ext)
-   if ext == '.css' then
-      return 'text/css'
-   elseif ext == '.js' then
-      return 'text/javascript'
-   else
-      return 'text/html' -- TODO: other mime types
-   end
+    return mime_types[ext] or 'text/html'
 end
 
 local subscribers = {}
