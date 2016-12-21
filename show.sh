@@ -36,7 +36,7 @@ IMGFILE=${@:$OPTIND:1}
 
 EXT=${IMGFILE##*.}
 case $EXT in
-  jpg) EXT="jpeg"
+  jpg) EXT="jpg"
     ;;
   png|gif|bmp|webp|pdf)
     ;;
@@ -47,10 +47,10 @@ esac
 
 function compose() { 
   cat <<EOF
-  { "command": "image", "title":"$TITLE", "src":"data:image/${EXT};base64,
+  { "command": "pane", "type":"image", "title":"$TITLE", "id":"$WIN", "content": { "src": "data:image/${EXT};base64,
 EOF
   openssl enc -base64 -in $IMGFILE
-  echo '"}'
+  echo '"} }'
 }
 
 compose | curl -X POST -d @- http://localhost:8000/events
