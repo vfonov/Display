@@ -72,6 +72,7 @@ function M.image(img, opts)
 
   -- options:
   opts = opts or {}
+  local use_png=opts.use_png or false
 
   if type(img) == 'table' then
     return M.images(img, opts)
@@ -89,8 +90,16 @@ function M.image(img, opts)
   img = normalize(img, opts)
 
   -- write to in-memory compressed JPG
-  local inmem_img = image.compressJPG(img)
-  local imgdata = 'data:image/jpg;base64,' .. mime.b64(ffi.string(inmem_img:data(), inmem_img:nElement()))
+  local inmem_img 
+  local imgdata
+  
+  if use_png then
+    inmem_img  = image.compressPNG(img)
+    imgdata = 'data:image/png;base64,' .. mime.b64(ffi.string(inmem_img:data(), inmem_img:nElement()))
+  else
+    inmem_img  = image.compressJPG(img)
+    imgdata = 'data:image/jpg;base64,' .. mime.b64(ffi.string(inmem_img:data(), inmem_img:nElement()))
+  end
 
   torch.setdefaulttensortype(defaultType)
 
