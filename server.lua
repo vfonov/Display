@@ -26,7 +26,7 @@ end
 local subscribers = {}
 
 local function handler(req, res, client)
-  print(req.method, req.url.path)
+  -- print(req.method, req.url.path)
 
   if req.url.path == '/events' then
     local headers = {
